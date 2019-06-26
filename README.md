@@ -6,5 +6,8 @@
 
 --还有一个imageViewProgressbar
 
-<image src="show2.gif"/>
+<image src="show3.gif"/>
+
+--TagImageView
+<image src="show2.jpg"/>
 
