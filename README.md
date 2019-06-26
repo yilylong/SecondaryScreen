@@ -1,3 +1,5 @@
 # SecondaryScreen
-自定义滑动负一屏的view
-<video src='image/show_video.mp4' height='320' width='480'/>
+
+- 因为只有一个自定义ViewGroup就不上传maven了，直接拷入工程去用就O了。用法参考demo
+
+<image src="show.gif"/>
