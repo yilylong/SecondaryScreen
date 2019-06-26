@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.zhl.secondaryscreen.R;
 import com.zhl.secondaryscreen.fragment.MainFragment;
 import com.zhl.secondaryscreen.fragment.OtherFragment;
+import com.zhl.secondaryscreen.fragment.ProgressbarFragment;
+import com.zhl.secondaryscreen.fragment.TagImageFragment;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,12 @@ public class MyPaperAdapter extends FragmentPagerAdapter {
                 break;
             case 3:
                 fragment = OtherFragment.newInstance(mDatas.get(position),R.mipmap.v3);
+                break;
+            case 4:
+                fragment = ProgressbarFragment.newInstance();
+                break;
+            case 5:
+                fragment = TagImageFragment.newInstance();
                 break;
         }
         return fragment;

@@ -36,7 +36,7 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_custom_refresh_header,null);
+        View view = inflater.inflate(R.layout.activity_custom_refresh_header,null);
         refreshView =  view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

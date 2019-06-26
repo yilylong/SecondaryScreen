@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         mTitleDataList.add("发现");
         mTitleDataList.add("推荐");
         mTitleDataList.add("日报");
+        mTitleDataList.add("ImageProgressBar");
+        mTitleDataList.add("ImageTag");
         magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         secondaryScreenView = findViewById(R.id.secondaryScreenView);
         mViewPager = findViewById(R.id.viewpager);
