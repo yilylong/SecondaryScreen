@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagImageAttr">
+
+        <attr name="tagBackgroud" format="color|reference"></attr>
+        <attr name="tagTextColor" format="color|reference"></attr>
+        <attr name="tagSize" format="integer|reference"></attr>
+        <attr name="showTag" format="boolean"></attr>
+        <attr name="tagLocation">
+            <enum name="ON_TOP_lEFT" value="0" />
+            <enum name="ON_TOP_RIGHT" value="1" />
+        </attr>
+
+    </declare-styleable>
+    <declare-styleable name="ImageProgressBar">
+
+        <attr name="imagebg" format="reference|integer"></attr>
+        <attr name="roundConer" format="reference|integer|dimension"></attr>
+        <attr name="coverColor" format="reference|color|integer"></attr>
+        <attr name="styleMode" format="enum">
+            <enum name="mode_image_show" value="0" />
+            <enum name="mode_image_hidden" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SecondaryScreenView">
+        <attr name="rate" format="reference|float"></attr>
+    </declare-styleable>
+</resources>
