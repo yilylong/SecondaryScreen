@@ -4,10 +4,11 @@
 
 <image src="show.gif"/>
 
---还有一个imageViewProgressbar
+- 还有一个imageViewProgressbar
 
 <image src="show3.gif"/>
 
---TagImageView
-<image src="show2.jpg"/>
+- TagImageView
+
+<image src="show2.jpg" width='480' height='800'/>
 
