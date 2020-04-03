@@ -1,5 +1,6 @@
 package com.zhl.secondaryscreen.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +15,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhl.secondaryscreen.R;
+import com.zhl.secondaryscreen.activity.SecondFloorActivity;
 import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class MainFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<String> datas = new ArrayList<>();
     private SmartRefreshLayout refreshView ;
+    private CommonAdapter<String> mAdapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +47,12 @@ public class MainFragment extends Fragment {
         for (int i = 0; i < 30; i++) {
             datas.add("custom_refresh_header" + i);
         }
-        mRecyclerView.setAdapter(new CommonAdapter(getContext(), R.layout.item_cardview, datas) {
+        mRecyclerView.setAdapter(mAdapter = new CommonAdapter<String>(getContext(), R.layout.item_cardview, datas) {
             @Override
-            protected void convert(ViewHolder holder, Object o, int position) {
-                holder.setText(R.id.item_tx, datas.get(position));
+            protected void convert(ViewHolder holder, String s, int position) {
+                holder.setText(R.id.item_tx, s);
             }
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-            }
         });
         refreshView.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -62,6 +63,18 @@ public class MainFragment extends Fragment {
                         refreshView.finishRefresh();
                     }
                 },2000);
+            }
+        });
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                Intent intent = new Intent(getContext(), SecondFloorActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
             }
         });
         return view;

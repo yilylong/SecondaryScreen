@@ -26,4 +26,9 @@
     <declare-styleable name="SecondaryScreenView">
         <attr name="rate" format="reference|float"></attr>
     </declare-styleable>
+    <declare-styleable name="SecondFloorView">
+        <attr name="resistance" format="reference|float"></attr>
+        <attr name="pullRefreshDistance" format="reference|integer"></attr>
+        <attr name="topOffset" format="reference|dimension"></attr>
+    </declare-styleable>
 </resources>

@@ -25,8 +25,8 @@ import java.util.ArrayList;
 public class SecondaryScreenView extends ViewGroup {
     private View secondaryView;
     private View mainView;
-    private int downX, downY,endX;
-    private float rate = 0.65f;
+    private int downX, downY, endX;
+    private float rate = 0.60f;
     private boolean isScrollerRight = true;
     private ArrayList<ViewPager> viewPagers = new ArrayList<>();
     private float touchSlop;
@@ -42,14 +42,14 @@ public class SecondaryScreenView extends ViewGroup {
     public SecondaryScreenView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SecondaryScreenView);
-        rate = array.getFloat(R.styleable.SecondaryScreenView_rate,rate);
+        rate = array.getFloat(R.styleable.SecondaryScreenView_rate, rate);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int count = getChildCount();
-        if(count>2){
+        if (count > 2) {
             throw new RuntimeException("only can host 2 direct child view");
         }
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -145,23 +145,23 @@ public class SecondaryScreenView extends ViewGroup {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // 处理viewpager的事件冲突
         ViewPager pager = getTouchedViewPager(ev);
-        if(pager!=null&&pager.getCurrentItem()!=0){
+        if (pager != null && pager.getCurrentItem() != 0) {
             return super.onInterceptTouchEvent(ev);
         }
-        switch (ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = (int) ev.getRawX();
                 downY = (int) ev.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                float delX = ev.getRawX()-downX;
-                float delY = ev.getRawY()-downY;
-                if(Math.abs(delX)>touchSlop&& Math.abs(delX)> Math.abs(delY)&&pager!=null&&pager.getCurrentItem()==0&&delX>0){
+                float delX = ev.getRawX() - downX;
+                float delY = ev.getRawY() - downY;
+                if (Math.abs(delX) > touchSlop && Math.abs(delX) > Math.abs(delY) && pager != null && pager.getCurrentItem() == 0 && delX > 0) {
                     return true;
                 }
-                if(secondaryView.getX()==0f&& Math.abs(delX)>touchSlop&& Math.abs(delX)> Math.abs(delY)&&pager!=null&&pager.getCurrentItem()==pager.getChildCount()-1&&delX<0){
-                    return true;
-                }
+//                if(secondaryView.getX()==0f&& Math.abs(delX)>touchSlop&& Math.abs(delX)> Math.abs(delY)&&pager!=null&&pager.getCurrentItem()==pager.getChildCount()-1&&delX<0){
+//                    return true;
+//                }
             case MotionEvent.ACTION_UP:
                 break;
         }
@@ -174,7 +174,7 @@ public class SecondaryScreenView extends ViewGroup {
             return null;
         }
         Rect mRect = new Rect();
-        for(ViewPager viewPager:viewPagers){
+        for (ViewPager viewPager : viewPagers) {
             viewPager.getHitRect(mRect);
             if (mRect.contains((int) ev.getX(), (int) ev.getY())) {
                 return viewPager;
@@ -191,30 +191,28 @@ public class SecondaryScreenView extends ViewGroup {
                 downY = (int) event.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                int moveX = (int)(event.getRawX() - downX);
-                int moveY = (int)(event.getRawY() - downY);
-                if(secondaryView.getX()<0&&moveX>0){
-                    moveX*=rate;
+                int moveX = (int) (event.getRawX() - downX);
+                int moveY = (int) (event.getRawY() - downY);
+                if (secondaryView.getX() < 0 && moveX > 0) {
+                    moveX *= rate;
                 }
-                if(moveX>0){
+                if (moveX > 0) {
                     isScrollerRight = true;
-                }else{
+                } else {
                     isScrollerRight = false;
                 }
-                int translateX_second = endX+moveX;
-                int translateX_main = endX+moveX;
-                if (Math.abs(moveX) > Math.abs(moveY)) {// 横滑
-                    if(translateX_second>=secondaryView.getWidth()){
-                        translateX_second = secondaryView.getWidth();
-                        translateX_main = mainView.getWidth();
-                    }
-                    if(translateX_second<=0){
-                        translateX_second = 0;
-                        translateX_main = 0;
-                    }
-                    secondaryView.setTranslationX(translateX_second);
-                    mainView.setTranslationX(translateX_main);
+                int translateX_second = endX + moveX;
+                int translateX_main = endX + moveX;
+                if (translateX_second >= secondaryView.getWidth()) {
+                    translateX_second = secondaryView.getWidth();
+                    translateX_main = mainView.getWidth();
                 }
+                if (translateX_second <= 0) {
+                    translateX_second = 0;
+                    translateX_main = 0;
+                }
+                secondaryView.setTranslationX(translateX_second);
+                mainView.setTranslationX(translateX_main);
                 break;
             case MotionEvent.ACTION_UP:
                 endX = (int) mainView.getTranslationX();
@@ -224,20 +222,20 @@ public class SecondaryScreenView extends ViewGroup {
         return true;
     }
 
-    public void translateToSecondaryView(){
+    public void translateToSecondaryView() {
         endX = secondaryView.getWidth();
         isScrollerRight = true;
         startTranslateAnim();
     }
 
-    public void translateToMainView(){
+    public void translateToMainView() {
         endX = mainView.getWidth() * 1 / 3;
         isScrollerRight = false;
         startTranslateAnim();
     }
 
-    public boolean isStillMainView(){
-        return endX ==0&&mainView.getTranslationX()==0;
+    public boolean isStillMainView() {
+        return endX == 0 && mainView.getTranslationX() == 0;
     }
 
     private void startTranslateAnim() {
@@ -265,8 +263,8 @@ public class SecondaryScreenView extends ViewGroup {
             }
         }
         AnimatorSet animator = new AnimatorSet();
-        ObjectAnimator animator_secondaryView = ObjectAnimator.ofFloat(secondaryView,"translationX",secondTranslationX);
-        ObjectAnimator animator_mainView = ObjectAnimator.ofFloat(mainView,"translationX",mainTranslationX);
+        ObjectAnimator animator_secondaryView = ObjectAnimator.ofFloat(secondaryView, "translationX", secondTranslationX);
+        ObjectAnimator animator_mainView = ObjectAnimator.ofFloat(mainView, "translationX", mainTranslationX);
         animator.setDuration(200);
         animator.setInterpolator(new LinearInterpolator());
         animator.addListener(new Animator.AnimatorListener() {
